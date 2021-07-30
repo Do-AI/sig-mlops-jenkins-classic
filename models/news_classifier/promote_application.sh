@@ -10,7 +10,7 @@ export STAGING_FOLDER="staging"
 export PROD_FOLDER="production"
 
 # This is the user that is going to be assigned to PRs
-export GIT_MANAGER="adriangonz"
+export GIT_MANAGER="litiblue"
 
 export UUID=$(cat /proc/sys/kernel/random/uuid)
 
