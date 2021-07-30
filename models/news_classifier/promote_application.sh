@@ -14,15 +14,15 @@ export GIT_MANAGER="litiblue"
 
 export UUID=$(cat /proc/sys/kernel/random/uuid)
 
-echo "aaa"
+echo "=== clone ${GITOPS_REPO} ==="
 git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GITOPS_ORG}/${GITOPS_REPO}
-echo "bbb"
 
 cd ${GITOPS_REPO}
 cp -r ../charts/* ${STAGING_FOLDER}/.
 ls ${STAGING_FOLDER}
 
 # Check if any modifications identified
+echo "=== aaa ==="
 git add -N ${STAGING_FOLDER}/
 git --no-pager diff --exit-code --name-only origin/master ${STAGING_FOLDER}
 STAGING_MODIFIED=$?
@@ -31,20 +31,24 @@ if [[ $STAGING_MODIFIED -eq 0 ]]; then
   exit 0
 fi
 
+echo "=== bbb ==="
 # Adding changes to staging repo automatically
 git add ${STAGING_FOLDER}/
 git commit -m '{"Action":"Deployment created","Message":"","Author":"","Email":""}'
 git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GITOPS_ORG}/${GITOPS_REPO}
 
+echo "=== ccc ==="
 # Add PR to prod
 cp -r ../charts/* production/.
 
+echo "=== ddd ==="
 # Create branch and push
 git checkout -b ${UUID}
 git add ${PROD_FOLDER}/
 git commit -m '{"Action":"Moving deployment to production repo","Message":"","Author":"","Email":""}'
 git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GITOPS_ORG}/${GITOPS_REPO} ${UUID}
 
+echo "=== eee ==="
 # Create pull request
 export PR_RESULT=$(curl \
   -u ${GIT_USERNAME}:${GIT_PASSWORD} \
@@ -55,6 +59,7 @@ export ISSUE_NUMBER=$(echo \
   $PR_RESULT |
   python -c 'import json,sys;obj=json.load(sys.stdin);print(obj["number"])')
 
+echo "=== fff ==="
 # Assign PR to relevant user
 curl \
   -u ${GIT_USERNAME}:${GIT_PASSWORD} \
