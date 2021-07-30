@@ -14,6 +14,8 @@ export GIT_MANAGER="litiblue"
 
 export UUID=$(cat /proc/sys/kernel/random/uuid)
 
+git config --global user.email "junseokseo@doai.ai"
+
 echo "=== clone ${GITOPS_REPO} ==="
 git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GITOPS_ORG}/${GITOPS_REPO}
 
