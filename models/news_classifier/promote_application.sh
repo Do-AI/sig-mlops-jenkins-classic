@@ -34,7 +34,9 @@ fi
 echo "=== bbb ==="
 # Adding changes to staging repo automatically
 git add ${STAGING_FOLDER}/
+echo "=== bbb - commit ==="
 git commit -m '{"Action":"Deployment created","Message":"","Author":"","Email":""}'
+echo "=== bbb - push ==="
 git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GITOPS_ORG}/${GITOPS_REPO}
 
 echo "=== ccc ==="
