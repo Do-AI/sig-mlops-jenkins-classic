@@ -14,7 +14,9 @@ export GIT_MANAGER="litiblue"
 
 export UUID=$(cat /proc/sys/kernel/random/uuid)
 
+echo "aaa"
 git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GITOPS_ORG}/${GITOPS_REPO}
+echo "bbb"
 
 cd ${GITOPS_REPO}
 cp -r ../charts/* ${STAGING_FOLDER}/.
